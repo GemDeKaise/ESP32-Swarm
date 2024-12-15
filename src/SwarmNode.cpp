@@ -194,23 +194,17 @@ void SwarmNode::onSent(const uint8_t *macAddr, esp_now_send_status_t status) {
 
 void SwarmNode::sendToServer(const char *data) {
     if (WiFi.status() == WL_CONNECTED) {
-        HTTPClient http;
-        http.begin("https://hugely-splendid-lark.ngrok-free.app/sensor-data");
-        http.addHeader("Content-Type", "application/json");
+      HTTPClient http;
+      http.begin("http://192.168.0.132:8000/sensor-data");
+      http.addHeader("Content-Type", "application/json");
 
-        int httpResponseCode = http.POST(data);
-		if (httpResponseCode == 307) {
-			String redirectUrl = http.getLocation();
-			http.end(); 
-			http.begin(redirectUrl);
-			httpResponseCode = http.POST(data);
-		}
+      int httpResponseCode = http.POST(data);
 
-		if (httpResponseCode == 200) {
-			Serial.println("Data sent successfully");
-		} else {
-			Serial.printf("Failed to send data. HTTP response code: %d\n", httpResponseCode);
-		}
+    if (httpResponseCode == 200) {
+      Serial.println("Data sent successfully");
+    } else {
+      Serial.printf("Failed to send data. HTTP response code: %d\n", httpResponseCode);
+    }
 
         http.end();
     } else {
