@@ -1,4 +1,9 @@
 #include "SwarmNode.h"
+#include <DHT.h>
+
+#define DHTPIN 22 
+#define DHTTYPE DHT11
+DHT dht(DHTPIN, DHTTYPE);
 
 SwarmNode swarmNode;
 
@@ -21,13 +26,22 @@ void setup() {
     Serial.printf("Chip ID: %u\n", chipID);
 
     swarmNode.begin();
+    dht.begin();
 }
 
 void loop() {
+    float temperature = dht.readTemperature();
+    float humidity = dht.readHumidity();
+
+    if (isnan(temperature) || isnan(humidity)) {
+        Serial.println("Failed to read from DHT sensor!");
+        return;
+    }
+
     SensorData sensorData = {
         (uint32_t)ESP.getEfuseMac(),
-        random(200, 300) / 10.0, 
-        random(400, 600) / 10.0  
+        temperature,
+        humidity
     };
 
     String data = serializeSensorData(sensorData);
