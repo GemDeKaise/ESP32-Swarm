@@ -39,8 +39,12 @@ Proiectul folosește o combinație de protocoale pentru o comunicare eficientă:
 
 ## Vizualizarea și procesarea datelor
 Datele colectate sunt disponibile prin:
-1. **Pagina principală a aplicației web.**
-2. **Pagini dedicate fiecărui nod ESP, cu grafice detaliate.**
+1. **Pagina principală a aplicației web:**  
+   ![Front Page](images/front_page.png)
+
+2. **Pagini dedicate fiecărui nod ESP, cu grafice detaliate:**  
+   ![Graph Page](images/graph_page.png)
+
 3. **Notificări prin e-mail în cazul alertelor.**
 
 ## Securitate
